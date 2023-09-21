@@ -1,4 +1,9 @@
 import 'package:get_it/get_it.dart';
+import 'package:project_study/features/dashboard/data/data_source/remote/product_api_service.dart';
+import 'package:project_study/features/dashboard/data/repository/product_repository.dart';
+import 'package:project_study/features/dashboard/domain/repositories/product_repository.dart';
+import 'package:project_study/features/dashboard/domain/usecase/get_product.dart';
+import 'package:project_study/features/dashboard/presentation/bloc/product/remote/remote_product_bloc.dart';
 import 'package:project_study/features/news/data/data_source/local/DAO/app_database.dart';
 import 'package:project_study/features/news/data/data_source/remote/news_api_service.dart';
 import 'package:dio/dio.dart';
@@ -23,8 +28,10 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<Dio>(Dio());
   //dependencies
   sl.registerSingleton<NewsApiService>(NewsApiService(sl()));
+  sl.registerSingleton<ProductApiService>(ProductApiService(sl()));
 
   sl.registerSingleton<ArticleRepository>(ArticleRepositoryImpl(sl(), sl()));
+  sl.registerSingleton<ProductRepository>(ProductRepositoryImpl(sl()));
 
   //usecase
   sl.registerSingleton<GetArticleUseCase>(GetArticleUseCase(sl()));
@@ -35,9 +42,12 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<RemoveArticleUseCase>(RemoveArticleUseCase(sl()));
 
+  sl.registerSingleton<GetProductUseCase>(GetProductUseCase(sl()));
+
   //bloc
   // a function of the registerFactory it can register more than once
   sl.registerFactory<RemoteArticleBlocBloc>(() => RemoteArticleBlocBloc(sl()));
   sl.registerFactory<LocalArticleBloc>(
       () => LocalArticleBloc(sl(), sl(), sl()));
+  sl.registerFactory<RemoteProductBloc>(() => RemoteProductBloc(sl()));
 }

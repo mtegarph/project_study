@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_study/config/routes/routes.dart';
 import 'package:project_study/config/theme/app_theme.dart';
+import 'package:project_study/features/dashboard/presentation/bloc/product/remote/remote_product_bloc.dart';
 import 'package:project_study/features/login/views/login_screen.dart';
 import 'package:project_study/features/news/presentations/bloc/article/remote/remote_article_bloc.dart';
 import 'package:project_study/injection_container.dart';
@@ -18,8 +19,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<RemoteArticleBlocBloc>(
-      create: (context) => sl()..add(const GetArticles()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<RemoteArticleBlocBloc>(
+          create: (context) => sl()..add(const GetArticles()),
+        ),
+        BlocProvider<RemoteProductBloc>(
+          create: (context) => sl()..add(const GetProducts()),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: theme(),
