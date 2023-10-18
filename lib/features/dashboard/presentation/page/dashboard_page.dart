@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project_study/features/dashboard/presentation/bloc/product/remote/remote_product_bloc.dart';
+import 'package:project_study/features/dashboard/presentation/page/detail_page.dart';
 import 'package:project_study/models/item.dart';
 import 'package:supercharged/supercharged.dart';
 
@@ -149,9 +150,20 @@ class DashBoardPage extends StatelessWidget {
                         itemCount: recommendation.length,
                         itemBuilder: (context, index) {
                           final item = recommendation[index];
-                          return Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: item.buildArea(context),
+                          return GestureDetector(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailPage(
+                                      recommendation: item, index: index),
+                                )),
+                            child: Hero(
+                              tag: 'barang$index',
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: item.buildArea(context),
+                              ),
+                            ),
                           );
                         },
                       ),
