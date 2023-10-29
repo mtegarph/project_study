@@ -4,6 +4,11 @@ import 'package:project_study/features/dashboard/data/repository/product_reposit
 import 'package:project_study/features/dashboard/domain/repositories/product_repository.dart';
 import 'package:project_study/features/dashboard/domain/usecase/get_product.dart';
 import 'package:project_study/features/dashboard/presentation/bloc/product/remote/remote_product_bloc.dart';
+import 'package:project_study/features/history/data/datasources/remote/history_api_services.dart';
+import 'package:project_study/features/history/data/repositories/history_repository.dart';
+import 'package:project_study/features/history/domain/repositories/history_reporitory.dart';
+import 'package:project_study/features/history/domain/usecases/get_history.dart';
+import 'package:project_study/features/history/presentation/bloc/history_bloc.dart';
 import 'package:project_study/features/news/data/data_source/local/DAO/app_database.dart';
 import 'package:project_study/features/news/data/data_source/remote/news_api_service.dart';
 import 'package:dio/dio.dart';
@@ -29,10 +34,10 @@ Future<void> initializeDependencies() async {
   //dependencies
   sl.registerSingleton<NewsApiService>(NewsApiService(sl()));
   sl.registerSingleton<ProductApiService>(ProductApiService(sl()));
-
+  sl.registerSingleton<HistorApiServices>(HistorApiServices(sl()));
   sl.registerSingleton<ArticleRepository>(ArticleRepositoryImpl(sl(), sl()));
   sl.registerSingleton<ProductRepository>(ProductRepositoryImpl(sl()));
-
+  sl.registerSingleton<HistoryRepository>(HistoryRepositoryImpl(sl()));
   //usecase
   sl.registerSingleton<GetArticleUseCase>(GetArticleUseCase(sl()));
 
@@ -43,11 +48,12 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<RemoveArticleUseCase>(RemoveArticleUseCase(sl()));
 
   sl.registerSingleton<GetProductUseCase>(GetProductUseCase(sl()));
-
+  sl.registerSingleton<GetHistoryUseCase>(GetHistoryUseCase(sl()));
   //bloc
   // a function of the registerFactory it can register more than once
   sl.registerFactory<RemoteArticleBlocBloc>(() => RemoteArticleBlocBloc(sl()));
   sl.registerFactory<LocalArticleBloc>(
       () => LocalArticleBloc(sl(), sl(), sl()));
   sl.registerFactory<RemoteProductBloc>(() => RemoteProductBloc(sl()));
+  sl.registerFactory<HistoryBloc>(() => HistoryBloc(sl()));
 }

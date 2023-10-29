@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_study/config/routes/routes.dart';
 import 'package:project_study/config/theme/app_theme.dart';
 import 'package:project_study/features/dashboard/presentation/bloc/product/remote/remote_product_bloc.dart';
+import 'package:project_study/features/history/presentation/bloc/history_bloc.dart';
 import 'package:project_study/features/login/views/login_screen.dart';
 import 'package:project_study/features/news/presentations/bloc/article/remote/remote_article_bloc.dart';
 import 'package:project_study/injection_container.dart';
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<RemoteProductBloc>(
           create: (context) => sl()..add(const GetProducts()),
         ),
+        BlocProvider<HistoryBloc>(
+          create: (context) => sl()..add(const GetHistory()),
+        )
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

@@ -24,7 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Home.pageView.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
           backgroundColor: '352F44'.toColor(),
-          unselectedItemColor: Colors.white,
+          unselectedItemColor: const Color.fromRGBO(244, 67, 54, 1),
+          selectedItemColor: '352F44'.toColor(),
           currentIndex: selectedIndex,
           onTap: onItemTapped,
           items: const [
@@ -35,6 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(
               icon: Icon(Icons.newspaper),
               label: 'News',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.history),
+              label: 'History',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.chat),

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_study/config/theme/app_theme.dart';
 import 'package:project_study/features/dashboard/presentation/bloc/product/remote/remote_product_bloc.dart';
 import 'package:project_study/features/dashboard/presentation/page/detail_page.dart';
 import 'package:project_study/models/item.dart';
@@ -80,65 +81,7 @@ class DashBoardPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      //height: 500, // Adjust this height as needed
-                      width: MediaQuery.of(context).size.width,
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 108,
-                            decoration:
-                                const BoxDecoration(color: Colors.white),
-                          ),
-                          const Positioned(
-                            left: 24,
-                            top: 30,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'FoodMarket',
-                                  style: TextStyle(
-                                    color: Color(0xFF020202),
-                                    fontSize: 22,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  'Let’s get some foods',
-                                  style: TextStyle(
-                                    color: Color(0xFF8D92A3),
-                                    fontSize: 14,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Positioned(
-                            right: 24, // Adjust positioning as needed
-                            top: 30,
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFFC4C4C4),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              child: Image.network(
-                                "https://via.placeholder.com/50x50",
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    appBar(context),
                     const SizedBox(
                       height: 10,
                     ),
