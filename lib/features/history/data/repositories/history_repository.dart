@@ -16,8 +16,8 @@ class HistoryRepositoryImpl implements HistoryRepository {
     try {
       if (httpresponse.response.statusCode == HttpStatus.ok) {
         List<HistoryEntity> history = [];
-        httpresponse.data.carts.forEach((element) {
-          element.products.forEach((element2) {
+        for (var element in httpresponse.data.carts) {
+          for (var element2 in element.products) {
             history.add(HistoryEntity(
                 thumbnail: element2.thumbnail,
                 discountPercentage: element2.discountPercentage,
@@ -26,8 +26,8 @@ class HistoryRepositoryImpl implements HistoryRepository {
                 quantity: element2.quantity,
                 title: element2.title,
                 total: element2.total));
-          });
-        });
+          }
+        }
         return DataSuccess(history);
       } else {
         return DataFailed(DioException(

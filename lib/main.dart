@@ -6,6 +6,7 @@ import 'package:project_study/features/dashboard/presentation/bloc/product/remot
 import 'package:project_study/features/history/presentation/bloc/history_bloc.dart';
 import 'package:project_study/features/login/views/login_screen.dart';
 import 'package:project_study/features/news/presentations/bloc/article/remote/remote_article_bloc.dart';
+import 'package:project_study/features/weather/presentation/bloc/weather_bloc.dart';
 import 'package:project_study/injection_container.dart';
 
 Future<void> main() async {
@@ -30,6 +31,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<HistoryBloc>(
           create: (context) => sl()..add(const GetHistory()),
+        ),
+        BlocProvider<WeatherBloc>(
+          create: (context) =>
+              sl()..add(const OnCityChanged(cityName: 'pamulang')),
         )
       ],
       child: MaterialApp(

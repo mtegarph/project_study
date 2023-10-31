@@ -30,6 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: onItemTapped,
           items: const [
             BottomNavigationBarItem(
+              icon: Icon(Icons.cloud),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
             ),

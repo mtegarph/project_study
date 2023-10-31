@@ -20,9 +20,17 @@ import 'package:project_study/features/news/domain/usecases/remove_article.dart'
 import 'package:project_study/features/news/domain/usecases/save_article.dart';
 import 'package:project_study/features/news/presentations/bloc/article/local/local_article_bloc.dart';
 import 'package:project_study/features/news/presentations/bloc/article/remote/remote_article_bloc.dart';
+import 'package:project_study/features/weather/data/datasources/remote/weather_remote_data_sources.dart';
+import 'package:project_study/features/weather/data/repositories/weather_repository_impl.dart';
+import 'package:project_study/features/weather/domain/repositories/weather_repository.dart';
+import 'package:project_study/features/weather/domain/usecases/get_current_weather.dart';
+import 'package:project_study/features/weather/presentation/bloc/weather_bloc.dart';
+import 'package:http/http.dart' as http;
 
 final sl = GetIt.instance;
 //the registerSingleton is for initilaize a funciont that will be initialize once and can be use anywhere
+//the different between lazysingleton and singleton is tha singleton is always registered immediately after the app starts
+//while lazy singleton is registered only when its requested as a dependency for som other class
 Future<void> initializeDependencies() async {
   //floor database
   final database =
@@ -31,6 +39,14 @@ Future<void> initializeDependencies() async {
 
   //dio
   sl.registerSingleton<Dio>(Dio());
+
+  //http
+  sl.registerLazySingleton(() => http.Client());
+
+  //data source
+  sl.registerLazySingleton<WeatherRemoteDataSource>(
+      () => WeatherRemoteDataSourceImpl(client: sl()));
+
   //dependencies
   sl.registerSingleton<NewsApiService>(NewsApiService(sl()));
   sl.registerSingleton<ProductApiService>(ProductApiService(sl()));
@@ -38,6 +54,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<ArticleRepository>(ArticleRepositoryImpl(sl(), sl()));
   sl.registerSingleton<ProductRepository>(ProductRepositoryImpl(sl()));
   sl.registerSingleton<HistoryRepository>(HistoryRepositoryImpl(sl()));
+  sl.registerLazySingleton<WeatherRepository>(
+      () => WeatherRepositoryImpl(weatherRemoteDataSource: sl()));
+
   //usecase
   sl.registerSingleton<GetArticleUseCase>(GetArticleUseCase(sl()));
 
@@ -49,6 +68,9 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<GetProductUseCase>(GetProductUseCase(sl()));
   sl.registerSingleton<GetHistoryUseCase>(GetHistoryUseCase(sl()));
+
+  sl.registerLazySingleton(() => GetCurrentWeatherUseCase(sl()));
+
   //bloc
   // a function of the registerFactory it can register more than once
   sl.registerFactory<RemoteArticleBlocBloc>(() => RemoteArticleBlocBloc(sl()));
@@ -56,4 +78,6 @@ Future<void> initializeDependencies() async {
       () => LocalArticleBloc(sl(), sl(), sl()));
   sl.registerFactory<RemoteProductBloc>(() => RemoteProductBloc(sl()));
   sl.registerFactory<HistoryBloc>(() => HistoryBloc(sl()));
+  sl.registerFactory<WeatherBloc>(
+      () => WeatherBloc(getCurrentWeatherUseCase: sl()));
 }
