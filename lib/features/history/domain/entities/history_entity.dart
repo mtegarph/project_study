@@ -18,6 +18,31 @@ class HistoryEntity extends Equatable {
       this.discountedPrice,
       required this.thumbnail});
   @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is HistoryEntity &&
+        other.thumbnail == thumbnail &&
+        other.discountPercentage == discountPercentage &&
+        other.discountedPrice == discountedPrice &&
+        other.price == price &&
+        other.quantity == quantity &&
+        other.title == title &&
+        other.total == total;
+  }
+
+  @override
+  int get hashCode {
+    return thumbnail.hashCode ^
+        discountPercentage.hashCode ^
+        discountedPrice.hashCode ^
+        price.hashCode ^
+        quantity.hashCode ^
+        title.hashCode ^
+        total.hashCode;
+  }
+
+  @override
   // TODO: implement props
   List<Object?> get props => [
         title,

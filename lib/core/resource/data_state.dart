@@ -9,6 +9,16 @@ abstract class DataState<T> {
 
 class DataSuccess<T> extends DataState<T> {
   const DataSuccess(T data) : super(data: data);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is DataSuccess<T> && other.data == data;
+  }
+
+  @override
+  int get hashCode => data.hashCode;
 }
 
 class DataFailed<T> extends DataState<T> {
