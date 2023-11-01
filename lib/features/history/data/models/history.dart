@@ -3,7 +3,7 @@
 //     final cart = cartFromJson(jsonString);
 
 import 'dart:convert';
-
+import 'package:flutter/foundation.dart';
 import 'package:project_study/features/history/domain/entities/history_entity.dart';
 
 class History {
@@ -33,6 +33,21 @@ class History {
         "skip": skip,
         "limit": limit,
       };
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is History &&
+        listEquals(other.carts,
+            carts) && // You need to import 'package:flutter/foundation.dart' to use listEquals
+        other.total == total &&
+        other.skip == skip &&
+        other.limit == limit;
+  }
+
+  @override
+  int get hashCode =>
+      carts.hashCode ^ total.hashCode ^ skip.hashCode ^ limit.hashCode;
 }
 
 class CartElement {
