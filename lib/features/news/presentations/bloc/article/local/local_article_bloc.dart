@@ -8,6 +8,7 @@ import 'package:project_study/features/news/domain/usecases/save_article.dart';
 part 'local_article_event.dart';
 part 'local_article_state.dart';
 
+//untuk pemanggilan use case di bloc bisa dipanggil dari berbagai fitur yang berbeda
 class LocalArticleBloc extends Bloc<LocalArticleEvent, LocalArticleState> {
   final GetSavedArticleUseCase getSavedArticleUseCase;
   final SavedArticleUseCase saveArticleUseCase;
